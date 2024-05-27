@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PsicologoController;
+use App\Http\Controllers\SecretariaController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +19,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 });
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+Route::get('/psicologo', [PsicologoController::class, 'index']);
+Route::get('/paciente', [PacienteController::class, 'index']);
+Route::get('/secretaria', [SecretariaController::class, 'index']);
