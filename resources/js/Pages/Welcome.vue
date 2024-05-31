@@ -72,18 +72,20 @@
     </p>
     </div>
   </template>
-<script setup>
-import Navbar from './Navbar.vue';
-import { Head } from '@inertiajs/inertia-vue3'; 
+  
+  <script setup>
+  import Navbar from './Navbar.vue';
+  import { Head } from '@inertiajs/inertia-vue3'; 
+  
+  defineProps({
+    canLogin: Boolean,
+    canRegister: Boolean,
+    laravelVersion: String,
+    phpVersion: String,
+  });
+  </script>
 
-defineProps({
-  canLogin: Boolean,
-  canRegister: Boolean,
-  laravelVersion: String,
-  phpVersion: String,
-});
-</script>
-<style scoped>e
+<style scoped>
 .contact-form {
   background-color: #f0f8ff; /* Fundo azul claro */
   padding: 20px;
