@@ -36,6 +36,7 @@ npm install electron
 
 Fora do container
 ```sh
+npm run build
 npm start
 ```
 
