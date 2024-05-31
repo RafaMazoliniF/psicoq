@@ -35,9 +35,9 @@ npm install electron
 ```
 
 Fora do container
-´´´sh
+```sh
 npm start
-´´´
+```
 
 Gerar a key do projeto Laravel
 ```sh
