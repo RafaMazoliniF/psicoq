@@ -32,9 +32,12 @@ Instalar as dependências do projeto dentro do container
 composer install
 npm install
 npm install electron
-npm start
 ```
 
+Fora do container
+´´´sh
+npm start
+´´´
 
 Gerar a key do projeto Laravel
 ```sh
