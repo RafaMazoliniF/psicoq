@@ -30,6 +30,7 @@ class PacienteController extends Controller
             'paciente_id' => $paciente->id,
             'data' => $request->data,
             'hora' => $request->hora,
+            //input nome da psico => $request-:nome_psicologo->findbyid();
         ]);
     
         return response()->json(['success' => 'Agendamento criado com sucesso'], 201);

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignIdFor(Paciente::class)->onDelete('cascade');
+            //$table->foringIdFor(Psicologo::class)->onDelete('cascade');
             $table->date('data');
             $table->time('hora');
         });
