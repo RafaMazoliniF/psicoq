@@ -11,7 +11,8 @@ class Agendamento extends Model
 
     protected $fillable =[
         'paciente_id',
-        //psicolgo_id
+        #'psicolgo_id',
+        #'anotacao',
         'data',
         'hora'
     ];

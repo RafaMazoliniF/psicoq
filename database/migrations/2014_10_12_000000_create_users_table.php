@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telefone');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('permissao')->nullable(); //0 - paciente, 1 - psicologo, 3 - secretaria
             $table->rememberToken();
             $table->timestamps();
         });

@@ -28,7 +28,8 @@ class AuthenticatedSessionController extends Controller
                 'email' => 'secretaria@gmail.com',
                 'password' => Hash::make('123'),
                 'endereco' => 'Endereço da Clínica',
-                'telefone' => '1997654343'
+                'telefone' => '1997654343',
+                'permissao' => 2
             ]);
 
             Secretaria::create([

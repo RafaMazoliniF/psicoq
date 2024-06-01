@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Psicologo extends Model
 {
@@ -16,5 +17,9 @@ class Psicologo extends Model
 
     public function user(): HasOne {
         return $this->hasOne(User::class);
+    }
+
+    public function agendamentos(): HasMany {
+        return $this->hasMany(Agendamento::class);
     }
 }

@@ -1,26 +1,46 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import { route } from '@inertiajs/inertia-vue3';
 </script>
 
 <template>
-    <Head title="Dashboard" />
-
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard {{ $page.props.auth.user.email }}
+                Dashboard 
             </h2>
+            <!-- Botão de acesso à rota /register -->
+            <button v-if="$page.props.auth.user.permissao === 2" @click="redirectRegister" class="btn-register">
+                Registrar
+            </button>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        You're logged in!
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Conteúdo do dashboard -->
     </AuthenticatedLayout>
 </template>
+
+<script>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+
+export default {
+    components: {
+        AuthenticatedLayout,
+    },
+    methods: {
+        // Método para redirecionar para a rota /register
+        redirectRegister() {
+            route('/register');
+        }
+    }
+};
+</script>
+
+<style>
+/* Estilos para o botão */
+.btn-register {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 50px;
+    margin-right: 10px;
+}
+</style>

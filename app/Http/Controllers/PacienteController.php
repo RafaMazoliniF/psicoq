@@ -23,14 +23,15 @@ class PacienteController extends Controller
     
         $request->validate([
             'data' => 'required|date',
-            'hora' => 'required|date_format:H:i',
+            'hora' => 'required|date_format:H:i'
+            #,'psicologo_id' => 'required|integer',
         ]);
     
         Agendamento::create([
             'paciente_id' => $paciente->id,
+            #'psicologo_id' => $request->psicologo_id,
             'data' => $request->data,
             'hora' => $request->hora,
-            //input nome da psico => $request-:nome_psicologo->findbyid();
         ]);
     
         return response()->json(['success' => 'Agendamento criado com sucesso'], 201);

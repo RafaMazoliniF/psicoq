@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PsicologoController;
 use App\Http\Controllers\SecretariaController;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

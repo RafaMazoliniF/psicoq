@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Paciente;
+use App\Models\Psicologo;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -35,12 +36,14 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required|string|max:255',
             'endereco' => 'required|string|max:255',
             'telefone' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'permissao' => 'required|integer'
         ]);
 
         $user = User::create([
@@ -49,15 +52,22 @@ class RegisteredUserController extends Controller
             'telefone' => $request->telefone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'permissao' => $request->permissao #define que é usuário <- FUNCIONOU PRA CARALHO
         ]);
 
+        if($request->permissao == 0){
         Paciente::create([
             'user_id' => $user->id
         ]);
-
+        }
+        if($request->permissao == 1){
+            Psicologo::create([
+                'user_id' => $user->id
+            ]);
+        }
         event(new Registered($user));
 
-        Auth::login($user);
+        #Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }
