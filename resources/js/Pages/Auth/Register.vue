@@ -26,12 +26,22 @@ const submit = () => {
 
 <template>
     <GuestLayout>
+        <div v-if="$page.props.auth.user.permissao === 2">
         <Head title="Register" />
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="permissao" value="permissao" />
-                <TextInput id="permissao" type="number" class="mt-1 block w-full" v-model="form.permissao" required autofocus autocomplete="name" />
+                <InputLabel for="permissao"/>
+                <div>
+                  <label>
+                    <input type="radio" id="permissao" name="permissao" value="0" v-model="form.permissao">
+                    Paciente
+                  </label>
+                  <label>
+                    <input type="radio" id="permissao" name="permissao" value="1" v-model="form.permissao">
+                    Psicologo
+                  </label>
+                </div>
                 <InputError class="mt-2" :message="form.errors.permissao" />
             </div>
             <div>
@@ -80,5 +90,46 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
+    </div>
+    
+  <div v-if="$page.props.auth.user.permissao !== 2" class="page">
+    <div class="message">Você não tem acesso</div>
+    <a href="/dashboard" class="nav-button ml-4" >Voltar</a>
+    
+  </div>
+
     </GuestLayout>
 </template>
+<style scoped>
+.page {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fff;
+  color: #333;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.message {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+</style>

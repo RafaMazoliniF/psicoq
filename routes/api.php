@@ -21,9 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('register', [RegisteredUserController::class, 'store'])->middleware('guest');
-Route::post('login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
-
 Route::post('agendar', [PacienteController::class, 'agendar'])->name('agendar');
 Route::post('cancelar', [PacienteController::class, 'cancelar'])->name('cancelar');
 Route::get('agendamentos', [PacienteController::class, 'agendamentos'])->name('agendamentos');

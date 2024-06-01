@@ -19,6 +19,7 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+require __DIR__.'/auth.php';
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -33,8 +34,6 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php';
-
 Route::get('/psicologo', [PsicologoController::class, 'index']);
-Route::get('/paciente', [PacienteController::class, 'index']);
+Route::get('/paciente', [PacienteController::class, 'agendar']);
 Route::get('/secretaria', [SecretariaController::class, 'index']);
