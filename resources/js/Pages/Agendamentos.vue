@@ -7,9 +7,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard 
-                <a href="/agendamentos" class="nav-button ml-4" v-if="$page.props.auth.user.permissao !== 2" style="float: right;">Agendamentos</a>
-                <a href="/register" class="nav-button ml-4" v-if="$page.props.auth.user.permissao === 2" style="float: right;">Cadastro</a>
+                Agendamentos 
+                <a href="/agendamentos/agendar" class="nav-button ml-4" v-if="$page.props.auth.user.permissao === 0" style="float: right;">Agendar</a>
             </h2>
         </template>
 

@@ -34,6 +34,9 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/agendamentos', [PacienteController::class,'agendamentos_page']);
+Route::get('/agendamentos/agendar', [PacienteController::class,'agendar_page']);
+
 Route::get('/psicologo', [PsicologoController::class, 'index']);
 Route::get('/paciente', [PacienteController::class, 'agendar']);
 Route::get('/secretaria', [SecretariaController::class, 'index']);

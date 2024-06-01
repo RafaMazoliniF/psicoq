@@ -14,6 +14,14 @@ class PacienteController extends Controller
         return Inertia::render('Paciente');
     }
 
+    public function agendamentos_page(){
+        return Inertia::render('Agendamentos');
+    }
+    public function agendar_page(){
+        $psicologos = Psicologo::all();
+        return Inertia::render('Agendar', ['psicologos' => $psicologos]);
+    }
+
     public function agendar(Request $request) {
         //$paciente = auth()->user()->id; //pega o id do usuário logado
         $paciente = Paciente::where('user_id', 3)->first();  //pega o id do paciente logado
