@@ -47,8 +47,8 @@ users: Array,
     <table class="tabela">
       <thead>
         <tr>
-          <th>ID Paciente</th>
-          <th>ID Psicologo</th>
+          <th>Nome Paciente</th>
+          <th>Nome Psicologo</th>
           <th>Data</th>
           <th>Horário</th>
         </tr>

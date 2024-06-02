@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PsicologoController;
 use App\Http\Controllers\SecretariaController;
 
@@ -38,6 +39,9 @@ Route::get('/agendamentos', [PacienteController::class,'agendamentos_page']);
 Route::get('/agendamentos/agenda', [PacienteController::class,'agendar_page']);
 Route::post('/agendar', [PacienteController::class, 'agendar'])->name('agendar');
 
+
 Route::get('/psicologo', [PsicologoController::class, 'index']);
 Route::get('/paciente', [PacienteController::class, 'agendar']);
 Route::get('/secretaria', [SecretariaController::class, 'index']);
+
+Route::post('/api/contact', [ContactController::class, 'store'])->name('contact.store');
