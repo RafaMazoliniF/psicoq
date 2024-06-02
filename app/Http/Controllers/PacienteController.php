@@ -6,6 +6,7 @@ use App\Models\Agendamento;
 use App\Models\User;
 use App\Models\Paciente;
 use App\Models\Psicologo;
+use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -87,7 +88,7 @@ class PacienteController extends Controller
             'hora' => $request->hora,
         ]);
     
-        return redirect()->route('/agendamentos')->with('success', 'Agendamento criado com sucesso!');
+        return redirect(RouteServiceProvider::HOME);
     }
 
     public function teste(){

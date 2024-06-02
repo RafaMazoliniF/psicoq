@@ -32,9 +32,6 @@ const submitForm = async () => {
   }
 };
 
-// const submit = () => {
-//   route.post(route('agendar'));
-// };
 </script>
 
 <template>

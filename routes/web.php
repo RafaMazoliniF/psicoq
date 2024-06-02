@@ -35,7 +35,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/agendamentos', [PacienteController::class,'agendamentos_page']);
+Route::get('/agendamentos', [PacienteController::class,'agendamentos_page'])->name('agendamentos');
 Route::get('/agendamentos/agenda', [PacienteController::class,'agendar_page']);
 Route::post('/agendar', [PacienteController::class, 'agendar'])->name('agendar');
 
