@@ -6,6 +6,7 @@ use App\Models\Agendamento;
 use App\Models\User;
 use App\Models\Paciente;
 use App\Models\Psicologo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,18 +18,44 @@ class PacienteController extends Controller
 
     public function agendamentos_page(){
         $id_user = auth()->user()->id;
+        $agendamentos_futuros = [];
+        $agendamentos_passados = [];
+        
+        $psicologos = Psicologo::all();
+        $pacientes = Paciente::all();
+        $users = User::all();
 
         if(auth()->user()->permissao == 0){
-        $paciente = Paciente::where('user_id',$id_user)->first();
-        $agendamentos = Agendamento::where('paciente_id',$paciente->id);
+            $paciente = Paciente::where('user_id',$id_user)->first();
+            $agendamentos_futuros = Agendamento::where('paciente_id',$paciente->id)
+                                                ->where('data', '>=', Carbon::today())
+                                                ->orderBy('data', 'asc')
+                                                ->get();
+            $agendamentos_passados = Agendamento::where('paciente_id',$paciente->id)
+                                                 ->where('data', '<', Carbon::today())
+                                                 ->orderBy('data', 'desc')
+                                                 ->get();
         }
+        
+    
         if(auth()->user()->permissao == 1){
             $psicologo = Psicologo::where('user_id',$id_user)->first();
-            $agendamentos = Agendamento::where('psicologo_id',$psicologo->id);
+            $agendamentos_futuros = Agendamento::where('psicologo_id',$psicologo->id)
+                                                ->where('data', '>=', Carbon::today())
+                                                ->orderBy('data', 'asc')
+                                                ->get();
+            $agendamentos_passados = Agendamento::where('psicologo_id',$psicologo->id)
+                                                 ->where('data', '<', Carbon::today())
+                                                 ->orderBy('data', 'desc')
+                                                 ->get();
         }
-        //printar os agendamentos
-        //historico e futuro 
-        return Inertia::render('Agendamentos',['agendamentos' => $agendamentos]);
+        return Inertia::render('Agendamentos', [
+            'agendamentos_futuros' => $agendamentos_futuros,
+            'agendamentos_passados' => $agendamentos_passados,
+            'psicologos' => $psicologos,
+            'pacientes' => $pacientes,
+            'users' => $users,
+        ]);
     }
  
     public function agendar_page(){ 

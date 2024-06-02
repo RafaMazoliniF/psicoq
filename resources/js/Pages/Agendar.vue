@@ -5,74 +5,79 @@ import { route } from '@inertiajs/inertia-vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 defineProps({
-    psicologos: Array,
-    agendamentos: Array,
-    users: Array,
-  });
-  const form = useForm({
-    psicologo_id:'',
-    data:'',
-    hora:'',
-  });
-  
+  psicologos: Array,
+  agendamentos: Array,
+  users: Array,
+});
+
+const form = useForm({
+  psicologo_id: '',
+  data: '',
+  hora: '',
+});
+
 const submit = () => {
-    form.post(route('agendar'));
+  form.post(route('agendar'));
 };
 </script>
 
 <template>
-    <AuthenticatedLayout>
-      <template #header>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Agenda
-          <a
-            href="/agendamentos"
-            class="nav-button ml-4"
-            v-if="$page.props.auth.user.permissao === 0"
-            style="float: right;"
-          >
-            Voltar
-          </a>
-        </h2>
-      </template>
-      <div class="agenda-container">
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Agenda
+        <a
+          href="/agendamentos"
+          class="nav-button ml-4"
+          v-if="$page.props.auth.user.permissao === 0"
+          style="float: right;"
+        >
+          Voltar
+        </a>
+      </h2>
+    </template>
+    <div class="agenda-container">
+      <div class="agenda">
+        <div v-for="psicologo in psicologos" :key="psicologo.id" class="item">
+          <p>Nome do Psicologo: {{ users[psicologo.user_id - 1].name }}</p>
+          <form @submit.prevent="submit" class="form">
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  id="psicologo_id"
+                  name="psicologo_id"
+                  :value="psicologo.id"
+                  v-model="form.psicologo_id"
+                  class="radio-button"
+                />
+                Selecionar
+              </label>
+            </div>
 
-        <div class="agenda">
-          <div v-for="psicologo in psicologos" :key="psicologo.id"
-            class="item"
-          >
-            <p>Nome do Psicologo:  {{  users[psicologo.user_id - 1].name }}</p>
+            <div>
+              <label for="data">Data:</label>
+              <input v-model="form.data" id="data" type="date" />
+            </div>
 
-            <form @submit.prevent="submit" class="form">
-              <div>
-                <label for="psicologo_id">Psicólogo ID:</label>
-                <input v-model="form.psicologo_id" id="psicologo_id" type="text" placeholder="Psicólogo ID" />
-              </div>
-
-              <div>
-                <label for="data">Data:</label>
-                <input v-model="form.data" id="data" type="date" />
-              </div>
-
-              <div>
-                <label for="hora">Horário:</label>
-                <select v-model="form.hora" id="hora">
-                  <option value="08:00">08h00</option>
-                  <option value="09:00">09h00</option>
-                  <option value="10:00">10h00</option>
-                  <option value="11:00">11h00</option>
-                  <option value="13:00">13h00</option>
-                  <option value="14:00">14h00</option>
-                  <option value="15:00">15h00</option>
-                </select>
-              </div>
-
-              <button type="submit">Enviar</button>
-            </form>
-          </div>
+            <div>
+              <label for="hora">Horário:</label>
+              <select v-model="form.hora" id="hora">
+                <option value="08:00">08h00</option>
+                <option value="09:00">09h00</option>
+                <option value="10:00">10h00</option>
+                <option value="11:00">11h00</option>
+                <option value="13:00">13h00</option>
+                <option value="14:00">14h00</option>
+                <option value="15:00">15h00</option>
+              </select>
+            </div>
+            <button type="submit">Enviar</button>
+          </form>
         </div>
       </div>
-    </AuthenticatedLayout>
+    </div>
+  </AuthenticatedLayout>
 </template>
 
 <style scoped>
@@ -165,5 +170,32 @@ button {
 
 button:hover {
   background: #0056b3;
+}
+
+.radio-button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.radio-button:checked::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: #007bff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
