@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agendamento;
+use App\Models\User;
 use App\Models\Paciente;
 use App\Models\Psicologo;
 use Illuminate\Http\Request;
@@ -15,36 +16,51 @@ class PacienteController extends Controller
     }
 
     public function agendamentos_page(){
-        return Inertia::render('Agendamentos');
-    }
-    public function agendar_page(){
-        $psicologos = Psicologo::all();
-        return Inertia::render('Agendar', ['psicologos' => $psicologos]);
-    }
+        $id_user = auth()->user()->id;
 
+        if(auth()->user()->permissao == 0){
+        $paciente = Paciente::where('user_id',$id_user)->first();
+        $agendamentos = Agendamento::where('paciente_id',$paciente->id);
+        }
+        if(auth()->user()->permissao == 1){
+            $psicologo = Psicologo::where('user_id',$id_user)->first();
+            $agendamentos = Agendamento::where('psicologo_id',$psicologo->id);
+        }
+        //printar os agendamentos
+        //historico e futuro 
+        return Inertia::render('Agendamentos',['agendamentos' => $agendamentos]);
+    }
+ 
+    public function agendar_page(){ 
+        $psicologos = Psicologo::all();
+        $agendamentos = Agendamento::all();
+        $users = User::all();
+        return Inertia::render('Agendar', ['psicologos' => $psicologos, 'agendamentos' => $agendamentos, 'users' => $users]);
+    }
+    //vou precisar enviar: id_psicologo, data, horario
     public function agendar(Request $request) {
-        //$paciente = auth()->user()->id; //pega o id do usuário logado
-        $paciente = Paciente::where('user_id', 3)->first();  //pega o id do paciente logado
-        $psicologo = Psicologo::where('user_id', 2)->first();
+        $paciente_user = auth()->user()->id; //pega o id do usuário logado
+        $paciente = Paciente::where('user_id',$paciente_user)->first();
+        ///$psicologo = Psicologo::where('user_id', 2)->first();
         
         if (!$paciente) {
             return response()->json(['error' => 'Usuário não autenticado'], 401);
         }
     
         $request->validate([
-            #'data' => 'required|date',
-            #'hora' => 'required|date_format:H:i',
-            #'psicologo_id' => 'required|integer',
+            'data' => 'required|date',
+            'hora' => 'required|date_format:H:i',
+            'psicologo_id' => 'required|integer',
         ]);
     
         Agendamento::create([
             'paciente_id' => $paciente->id,
-            'psicologo_id' => $psicologo->id,
-            'data' => '2024-05-31',
-            'hora' => '14:30',
+            'psicologo_id' => $request->psicologo_id,
+            'data' => $request->data,
+            'hora' => $request->hora,
         ]);
     
-        return response()->json(['success' => 'Agendamento criado com sucesso'], 201);
+        return redirect()->route('/agendamentos')->with('success', 'Agendamento criado com sucesso!');
     }
 
     public function teste(){
