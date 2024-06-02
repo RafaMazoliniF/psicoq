@@ -36,7 +36,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/agendamentos', [PacienteController::class,'agendamentos_page']);
 Route::get('/agendamentos/agenda', [PacienteController::class,'agendar_page']);
-Route::post('agendar', [PacienteController::class, 'agendar'])->name('agendar');
+Route::post('/agendar', [PacienteController::class, 'agendar'])->name('agendar');
 
 Route::get('/psicologo', [PsicologoController::class, 'index']);
 Route::get('/paciente', [PacienteController::class, 'agendar']);

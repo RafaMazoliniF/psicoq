@@ -1,8 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import {reactive} from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { route } from '@inertiajs/inertia-vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+
+import axios from 'axios';
+
 
 defineProps({
   psicologos: Array,
@@ -10,15 +14,27 @@ defineProps({
   users: Array,
 });
 
-const form = useForm({
+const form = ref({
   psicologo_id: '',
   data: '',
   hora: '',
 });
 
-const submit = () => {
-  form.post(route('agendar'));
+const submitForm = async () => {
+  try {
+    const response = await axios.post('/agendar', form.value);
+    successMessage.value = response.data;
+    form.value.psicologo_id = '';
+    form.value.data = '';
+    form.value.hora = '';
+  } catch (error) {
+    console.error('Erro ao enviar o formulário:', error);
+  }
 };
+
+// const submit = () => {
+//   route.post(route('agendar'));
+// };
 </script>
 
 <template>
@@ -40,7 +56,7 @@ const submit = () => {
       <div class="agenda">
         <div v-for="psicologo in psicologos" :key="psicologo.id" class="item">
           <p>Nome do Psicologo: {{ users[psicologo.user_id - 1].name }}</p>
-          <form @submit.prevent="submit" class="form">
+          <form @submit.prevent="submitForm" class="form">
             <div>
               <label>
                 <input
