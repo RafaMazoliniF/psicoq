@@ -26,6 +26,12 @@ const submit = () => {
     }
   });
 };
+
+const showFicha = ref(false);
+
+const toggleFicha = () => {
+  showFicha.value = !showFicha.value;
+}
 </script>
 
 <template>
