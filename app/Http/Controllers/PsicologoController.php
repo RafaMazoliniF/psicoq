@@ -39,5 +39,22 @@ class PsicologoController extends Controller
 
         return redirect()->back()->withErrors(['msg' => 'Agendamento não encontrado']);
     }
+
+    public function updateFicha($id, Request $request) {
+        $agendamento = Agendamento::find($id);
+        if ($agendamento) {
+            $paciente = Paciente::find($agendamento->paciente_id);
+            $user = User::find($paciente->user_id);
+
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->endereco = $request->get('endereco');
+            $user->telefone = $request->get('telefone');
+
+            $user->save();
+        } else {
+            return redirect()->back()->withErrors(['msg' => 'Agendamento não encontrado']);
+        }
+    }
 }
 

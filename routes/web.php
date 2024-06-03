@@ -6,6 +6,11 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PsicologoController;
 use App\Http\Controllers\SecretariaController;
 
+use App\Models\Agendamento;
+use App\Models\Paciente;
+use App\Models\Psicologo;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,5 +51,6 @@ Route::get('/secretaria', [SecretariaController::class, 'index']);
 
 Route::get('/anotacao/{id}', [PsicologoController::class, 'anotacao'])->name('anotacao');
 Route::post('/nova-anotacao/{id}', [PsicologoController::class, 'store'])->name('nova-anotacao');
+Route::put('/update-ficha/{id}', [PsicologoController::class, 'updateFicha'])->name('update-ficha');
 
 Route::post('/api/contact', [ContactController::class, 'store'])->name('contact.store');

@@ -1,6 +1,7 @@
 <script setup>
 import { route } from '@inertiajs/inertia-vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+
 </script>
 
 <template>

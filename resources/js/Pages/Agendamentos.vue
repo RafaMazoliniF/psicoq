@@ -12,9 +12,6 @@ defineProps({
   users: Array,
 });
 
-const handleView = (agendamentoId) => {
-  Inertia.get(route('/anotacao', { id: agendamentoId }));
-};
 </script>
 
 <template>
