@@ -45,6 +45,6 @@ Route::get('/paciente', [PacienteController::class, 'agendar']);
 Route::get('/secretaria', [SecretariaController::class, 'index']);
 
 Route::get('/anotacao/{id}', [PsicologoController::class, 'anotacao'])->name('anotacao');
-Route::post('/anotacao/{id}', [PsicologoController::class, 'novaAnotacao'])->name('anotacao');
+Route::post('/nova-anotacao/{id}', [PsicologoController::class, 'store'])->name('nova-anotacao');
 
 Route::post('/api/contact', [ContactController::class, 'store'])->name('contact.store');

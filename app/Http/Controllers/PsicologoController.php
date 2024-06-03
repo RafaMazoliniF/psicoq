@@ -18,13 +18,17 @@ class PsicologoController extends Controller
         return Inertia::render('Anotacao', ['agendamento' => $agendamento]);
     }
 
-    public function novaAnotacao($id) {
+    public function store($id, Request $request)
+    {
         $agendamento = Agendamento::find($id);
-       // $agendamento->anotacao = $text;
-        $agendamento->save();
+        if ($agendamento) {
+            $agendamento->anotacao = $request->get('anotacao');
+            $agendamento->save();
 
-        dd($agendamento);
+            return redirect()->route('agendamentos')->with('success', 'Anotação salva com sucesso!');
+        }
 
-        return redirect()->route('agendamentos');
+        return redirect()->back()->withErrors(['msg' => 'Agendamento não encontrado']);
     }
 }
+

@@ -1,24 +1,30 @@
 <script setup>
 import { ref } from 'vue';
-import { route } from '@inertiajs/inertia-vue3';
-import { Inertia } from '@inertiajs/inertia';
-import { InertiaLink } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
   agendamento: Object
 });
 
-// Usando um estado reativo para a anotação
-const anotacao = ref(props.agendamento.anotacao);
+// Initialize the form with the anotacao field from the props
+const form = useForm({
+  anotacao: props.agendamento.anotacao,
+});
 
-const saveAnotacao = () => {
-  Inertia.post(route('anotacao', agendamento.id))
-   {onError: (errors) => {
-      console.error(errors);
-    }}
+// Define the submit function
+const submit = () => {
+  form.post(route('nova-anotacao', { id: props.agendamento.id }), {
+    onError: (errors) => {
+      console.error('Form submission error:', errors);
+      alert('Erro ao salvar anotação');
+    }
+  });
 };
-</script>   
+</script>
 
 <template>
   <AuthenticatedLayout>
@@ -29,10 +35,13 @@ const saveAnotacao = () => {
       </h2>
     </template>
 
-    <div class="container">
-      <textarea v-model="anotacao" class="styled-textarea"></textarea>
-      <button @click="saveAnotacao" class="btn btn-primary">Salvar</button>
-    </div>
+    <form class="container" @submit.prevent="submit">
+      <InputLabel for="anotacao" value="Anotação" />
+      <TextInput id="anotacao" type="text" class="styled-textarea" v-model="form.anotacao" required autocomplete="Escreva aqui" />
+      <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+        Salvar
+      </PrimaryButton>
+    </form>
   </AuthenticatedLayout>
 </template>
 
