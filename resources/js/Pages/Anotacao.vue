@@ -67,7 +67,7 @@ const toggleFicha = () => {
 
 
 
-    <form class="container" @submit.prevent="submit">
+    <form class="container" @submit.prevent="submit" v-if="$page.props.auth.user.permissao === 1">
       <InputLabel for="anotacao" value="Anotação" />
       <TextInput id="anotacao" type="text" class="styled-textarea" v-model="form.anotacao" required autocomplete="Escreva aqui" />
       <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
