@@ -23,10 +23,10 @@ const form = ref({
 const submitForm = async () => {
   try {
     const response = await axios.post('/agendar', form.value);
-    successMessage.value = response.data;
     form.value.psicologo_id = '';
     form.value.data = '';
     form.value.hora = '';
+
   } catch (error) {
     console.error('Erro ao enviar o formulário:', error);
   }
