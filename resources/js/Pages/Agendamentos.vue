@@ -34,7 +34,7 @@ const handleView = (agendamentoId) => {
             <th>Nome Psicologo</th>
             <th>Data</th>
             <th>Horário</th>
-            <th>Anotação</th>
+            <th v-if="$page.props.auth.user.permissao === 1">Anotação</th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +43,7 @@ const handleView = (agendamentoId) => {
             <td>{{ users[psicologos[agendamento.psicologo_id -1].user_id -1].name }}</td>
             <td>{{ agendamento.data }}</td>
             <td>{{ agendamento.hora }}</td>
-            <td>{{ agendamento.anotacao }}</td>
+            <td v-if="$page.props.auth.user.permissao === 1"> {{ agendamento.anotacao }} </td>
           </tr>
         </tbody>
       </table>
@@ -58,7 +58,7 @@ const handleView = (agendamentoId) => {
             <th>Nome Psicologo</th>
             <th>Data</th>
             <th>Horário</th>
-            <th>Anotação</th>
+            <th v-if="$page.props.auth.user.permissao === 1">Anotação</th>
           </tr>
         </thead>
         <tbody>
@@ -67,7 +67,7 @@ const handleView = (agendamentoId) => {
             <td>{{ users[psicologos[agendamento.psicologo_id -1].user_id -1].name }}</td>
             <td>{{ agendamento.data }}</td>
             <td>{{ agendamento.hora }}</td>
-            <td><Inertia-link :href="`/anotacao/${agendamento.id}`">VER</Inertia-link></td>
+            <td v-if="$page.props.auth.user.permissao === 1"><Inertia-link :href="`/anotacao/${agendamento.id}`">VER</Inertia-link></td>
           </tr>
         </tbody>
       </table>
