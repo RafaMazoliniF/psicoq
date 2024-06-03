@@ -108,7 +108,7 @@ function pesquisacep(valor) {
 
             <div>
                 <InputLabel for="cep" value="Cep" />
-                <TextInput id="cep" type="text" class="mt-1 block w-full" v-model="form.cep" required autocomplete="cep" />
+                <TextInput id="cep" type="text" class="mt-1 block w-full" v-model="form.cep" required autocomplete="cep" onblur="pesquisacep(this.value);"/>
                 <InputError class="mt-2" :message="form.errors.cep" />
             </div>
 
