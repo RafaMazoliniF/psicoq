@@ -5,6 +5,7 @@ use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PsicologoController;
 use App\Http\Controllers\SecretariaController;
+use App\Http\Controllers\DownloadController;
 
 use App\Models\Agendamento;
 use App\Models\Paciente;
@@ -54,3 +55,5 @@ Route::post('/nova-anotacao/{id}', [PsicologoController::class, 'store'])->name(
 Route::put('/update-ficha/{id}', [PsicologoController::class, 'updateFicha'])->name('update-ficha');
 
 Route::post('/api/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::get('/download-atestado', [DownloadController::class, 'downloadDocxAtestado'])->name('download.atestado');
+Route::get('/download-encaminhamento', [DownloadController::class, 'downloadDocxEncaminhamento'])->name('download.encaminhamento');

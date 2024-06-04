@@ -123,6 +123,12 @@ const toggleEditFicha = () => {
         Salvar
       </PrimaryButton>
     </form>
+    
+  <div>
+    <a href="/download-encaminhamento" class="toggle-button">Encaminhamento</a>
+    <a href="/download-atestado" class="toggle-button">Atestado</a>
+  </div>
+
   </AuthenticatedLayout>
 </template>
 
