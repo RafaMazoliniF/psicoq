@@ -29,9 +29,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
 # Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+RUN useradd -G www-data,root -u 1000 -d /home/laravel laravel
+RUN mkdir -p /home/laravel/.composer && \
+    chown -R laravel:laravel /home/laravel
 
 # Install redis
 RUN pecl install -o -f redis \
@@ -41,4 +41,4 @@ RUN pecl install -o -f redis \
 # Set working directory
 WORKDIR /var/www
 
-USER $user
+USER laravel

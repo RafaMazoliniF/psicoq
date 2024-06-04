@@ -76,7 +76,14 @@ class PacienteController extends Controller
             'psicologo_id' => 'required|integer',
         ]);
     
-        if (Carbon::today()->toDateString() <= $request->data) {
+        if (Carbon::today()->toDateString() <= $request->data && 
+            Agendamento::where([
+                'data' => $request->data,
+                'hora' => $request->hora,
+                'psicologo_id' => $request->psicologo_id,
+                'paciente_id' => $request->paciente_id,
+            ])->get()->count() == 0) 
+        { 
             Agendamento::create([
                 'paciente_id' => $paciente->id,
                 'psicologo_id' => $request->psicologo_id,
