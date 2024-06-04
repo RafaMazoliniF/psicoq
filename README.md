@@ -31,12 +31,11 @@ Instalar as dependências do projeto dentro do container
 ```sh
 composer install
 npm install
-npm install electron
+docker network rm $(docker network ls -q)
 ```
 
-Fora do container
+Fora do container (exit)
 ```sh
-npm run build
 npm start
 ```
 
