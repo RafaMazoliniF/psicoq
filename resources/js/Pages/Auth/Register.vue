@@ -1,10 +1,10 @@
 <script setup>
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
 const form = useForm({
     permissao: '',
@@ -12,6 +12,7 @@ const form = useForm({
     email: '',
     endereco: '',
     telefone: '',
+    cep: '',
     password: '',
     password_confirmation: '',
     terms: false,
@@ -24,60 +25,36 @@ const submit = () => {
 };
 
 function limpa_formulário_cep() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('endereco').value=("");
+    form.endereco = "";
 }
 
-function meu_callback(conteudo) {
-    if (!("erro" in conteudo)) {
-        //Atualiza os campos com os valores.
-        document.getElementById('endereco').value=(conteudo.logradouro);
-    } //end if.
-    else {
-        //CEP não Encontrado.
-        limpa_formulário_cep();
-        alert("CEP não encontrado.");
-    }
-}     
-function pesquisacep(valor) {
-
-    //Nova variável "cep" somente com dígitos.
-    var cep = valor.replace(/\D/g, '');
-
-    //Verifica se campo cep possui valor informado.
-    if (cep != "") {
-
-        //Expressão regular para validar o CEP.
-        var validacep = /^[0-9]{8}$/;
-
-        //Valida o formato do CEP.
-        if(validacep.test(cep)) {
-
-            //Preenche os campos com "..." enquanto consulta webservice.
-            document.getElementById('endereco').value="...";
-
-            //Cria um elemento javascript.
-            var script = document.createElement('script');
-
-            //Sincroniza com o callback.
-            script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-
-            //Insere script no documento e carrega o conteúdo.
-            document.body.appendChild(script);
-
-        } //end if.
-        else {
-            //cep é inválido.
+async function pesquisacep() {
+    const cep = form.cep.replace(/\D/g, '');
+    if (cep !== "") {
+        const validacep = /^[0-9]{8}$/;
+        if (validacep.test(cep)) {
+            form.endereco = "...";
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+                if (!("erro" in data)) {
+                    form.endereco = `${data.logradouro}, ${data.localidade}`;
+                } else {
+                    limpa_formulário_cep();
+                    alert("CEP não encontrado.");
+                }
+            } catch (error) {
+                limpa_formulário_cep();
+                alert("Erro ao buscar CEP.");
+            }
+        } else {
             limpa_formulário_cep();
             alert("Formato de CEP inválido.");
         }
-    } //end if.
-    else {
-        //cep sem valor, limpa formulário.
+    } else {
         limpa_formulário_cep();
     }
-};
-
+}
 </script>
 
 <template>
@@ -107,17 +84,17 @@ function pesquisacep(valor) {
             </div>
 
             <div>
-                <InputLabel for="cep" value="Cep" />
-                <TextInput id="cep" type="text" class="mt-1 block w-full" v-model="form.cep" required autocomplete="cep" onblur="pesquisacep(this.value);"/>
-                <InputError class="mt-2" :message="form.errors.cep" />
+                <InputLabel for="cep" value="CEP" />
+                <TextInput id="cep" v-model="form.cep" @blur="pesquisacep" type="text" class="mt-1 block w-full" />
+                <InputError :message="form.errors.cep" class="mt-2" />
             </div>
 
             <div>
                 <InputLabel for="endereco" value="Endereço" />
-                <TextInput id="endereco" type="text" class="mt-1 block w-full" v-model="form.endereco" required autocomplete="endereco" />
-                <InputError class="mt-2" :message="form.errors.endereco" />
+                <TextInput id="endereco" v-model="form.endereco" type="text" class="mt-1 block w-full"  />
+                <InputError :message="form.errors.endereco" class="mt-2" />
             </div>
-
+            
             <div>
                 <InputLabel for="telefone" value="telefone" />
                 <TextInput id="telefone" type="text" class="mt-1 block w-full" v-model="form.telefone" required autocomplete="telefone" />
@@ -195,3 +172,4 @@ function pesquisacep(valor) {
   background-color: #0056b3;
 }
 </style>
+
