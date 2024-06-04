@@ -31,6 +31,7 @@ Instalar as dependências do projeto dentro do container
 ```sh
 composer install
 npm install
+php artisan key:generate
 npm run build
 ```
 
@@ -39,10 +40,6 @@ Fora do container (exit)
 npm start
 ```
 
-Gerar a key do projeto Laravel
-```sh
-php artisan key:generate
-```
 
 Acesse o projeto
 [http://localhost:8080](http://localhost:8080)
