@@ -7,11 +7,6 @@ use App\Http\Controllers\PsicologoController;
 use App\Http\Controllers\SecretariaController;
 use App\Http\Controllers\DownloadController;
 
-use App\Models\Agendamento;
-use App\Models\Paciente;
-use App\Models\Psicologo;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
