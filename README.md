@@ -31,7 +31,7 @@ Instalar as dependências do projeto dentro do container
 ```sh
 composer install
 npm install
-docker network rm $(docker network ls -q)
+npm run build
 ```
 
 Fora do container (exit)
