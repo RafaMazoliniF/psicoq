@@ -38,7 +38,7 @@ const submitAnotacao = () => {
 
 // Define the submit function for updating the ficha
 const submitFicha = () => {
-  formFicha.put(route('update-ficha', { id: props.user_paciente.id }), {
+  formFicha.put(route('update-ficha', { id: props.agendamento.id }), {
     onError: (errors) => {
       console.error('Form submission error:', errors);
       alert('Erro ao atualizar ficha');
