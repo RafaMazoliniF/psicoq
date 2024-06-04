@@ -50,6 +50,7 @@ class PacienteController extends Controller
                                                  ->orderBy('data', 'desc')
                                                  ->get();
         }
+        
         return Inertia::render('Agendamentos', [
             'agendamentos_futuros' => $agendamentos_futuros,
             'agendamentos_passados' => $agendamentos_passados,
@@ -75,7 +76,7 @@ class PacienteController extends Controller
             'psicologo_id' => 'required|integer',
         ]);
     
-        if (Carbon::now() < $request->data) {
+        if (Carbon::today()->toDateString() <= $request->data) {
             Agendamento::create([
                 'paciente_id' => $paciente->id,
                 'psicologo_id' => $request->psicologo_id,
